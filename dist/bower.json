@@ -1,0 +1,24 @@
+{
+  "name": "Allen",
+  "version": "0.0.1",
+  "authors": [
+    "allen wes <allen.wes.g@gmail.com>"
+  ],
+  "description": "chat room",
+  "main": "index.html",
+  "keywords": [
+    "chatroom"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "~3.3.4",
+    "jquery": "~2.1.4"
+  }
+}
