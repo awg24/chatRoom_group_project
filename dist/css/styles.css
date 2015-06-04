@@ -19,7 +19,9 @@
 	box-shadow: 1px 1px 3px blue;
 }
 
-
+.well {
+	background: rgb(211,232,221);
+}
 
 .change-color {
 	background: white;
@@ -27,7 +29,7 @@
 #chat {
 	margin-top: 20px;
 }
-#message {
+#message-area {
 	height:60px;
 	width: 100%;
 	resize: none;

@@ -47,18 +47,27 @@
   			</form>
   		</div>
 	</div>
-	<div class="page" id="chat">
+	<div class="page" id="chatroom">
 		<div class="well container">
-			<div class="col-xsm-12 col-sm-9 extend-height">what</div>
+			<ul class="nav nav-tabs">
+				<li><a href="#chat">chat</a></li>
+				<li><a href="#user">User</a></li>
+				<li><a href="#leaderboard">Leaderboard</a></li>
+			</ul>
+			<div class="col-xsm-12 col-sm-9 extend-height" id="general-chat">what</div>
+			<div class="col-xsm-12 col-sm-9 extend-height" id="user-info">user info</div>
+			<div class="col-xsm-12 col-sm-9 extend-height" id="leaderboard">im in the lead</div>
 			<div class="col-xsm-0 col-sm-2 col-sm-offset-1 extend-height change-color" id="user-list"></div>
 		</div>
 		<div class="well container extend-chat">
-			<div class="col-sm-11">
-				<textarea id="message"></textarea>
-			</div>
-			<div class="col-sm-1">
-				<button class="btn btn-primary btn-lg">Send</button>
-			</div>
+			<form id="message">
+				<div class="col-sm-11">
+					<input id="message-area">
+				</div>
+				<div class="col-sm-1">
+					<button type="submit" class="btn btn-primary btn-lg">Send</button>
+				</div>
+			</form>
 		</div>
 	</div>
 	<script type="text/javascript" src="bower_components/underscore/underscore-min.js"></script>

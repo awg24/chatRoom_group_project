@@ -7,13 +7,17 @@ $(document).ready(function(){
 	var $confirmPassword = $("#confirm-new-password");
 	var $signInBtn = $("#login-btn");
 	var $signUpBtn = $("#sign-up-btn");
-	var firstTimeSignUp = true;
+	var $message = $("#message");
+	var person;
 
 	var routeConfig = {
 		routes: {
 			"": "login",
 			"login":"login",
-			"chat/:user": "chat"
+			"chat/:user": "chat",
+			"chat": "chat1",
+			"user": "user",
+			"leaderboard": "leaderboard"
 		},
 
 		login: function(){
@@ -24,9 +28,42 @@ $(document).ready(function(){
 
 		chat: function(user){
 			$(".page").hide();
-			$("#chat").show();
+			$("#chatroom").show();
 			$("#user-list").html(user);	
+			$("#user-info").hide();
+			 person = user;
+			$("#leaderboard").hide();
+			$("#general-chat").show();
 			//make get request here
+		},
+		chat1: function(){
+			$(".page").hide();
+			$("#chatroom").show();
+			$("#user-info").hide();
+			$("#leaderboard").hide();
+			$("#general-chat").show();
+			//make get request here
+		},
+
+		user: function(){
+			console.log("user info");
+			console.log(person);
+			user = person;
+			$(".page").hide();
+			$("#chatroom").show();
+			$("#general-chat").hide();
+			$("#leaderboard").hide();
+			$("#user-info").show();
+		},
+
+		leaderboard: function(){
+			console.log("leaderboard");
+			user = person;
+			$(".page").hide();
+			$("#chatroom").show();
+			$("#general-chat").hide();
+			$("#user-info").hide();
+			$("#leaderboard").show();
 		}
 	};
 
@@ -41,6 +78,27 @@ $(document).ready(function(){
 
 	$signUpBtn.on("click", function(){
 		validateNewSignUp();
+	});
+
+	$message.on("submit", function(event){
+		event.preventDefault();
+		var messageID = null;
+		var userID = null;
+		var theMessage = $("#message-area").val();
+		$.get("https://young-spire-1181.herokuapp.com/users", {name:person}, function(data){
+			var dataID = data.id;
+			console.log(data);
+			$.ajax({
+					type: "POST",
+					url:"https://young-spire-1181.herokuapp.com/messages",
+					data:{user_id: dataID, body: theMessage},
+					success: function(messageObj){
+						console.log(messageObj);
+					}
+				});
+			
+		},"json");
+		
 	});
 
 	function validateNewSignUp(){
@@ -62,9 +120,12 @@ $(document).ready(function(){
 				myRoutes.navigate("login",{trigger: true});
 			} else {
 				$.ajax({
-					type: "PUT",
-					url:"https://young-spire-1181.herokuapp.com/chatrooms/",
-					data:{name:$newUsername.val(), password:$newPassword.val()}
+					type: "POST",
+					url:"https://young-spire-1181.herokuapp.com/users",
+					data:{name:$newUsername.val(), password:$newPassword.val()},
+					success: function(){
+						myRoutes.navigate("chat/"+$newUsername.val(), {trigger:true});
+					}
 				});
 			}
 	}
@@ -80,20 +141,20 @@ $(document).ready(function(){
 			$("#login-fields").removeClass("has-error");
 			$("#error-login").removeClass("give-error");
 			$("#error-login").html("");
-			myRoutes.navigate("chat/"+$username.val(),{trigger: true});
+			$.get("https://young-spire-1181.herokuapp.com/users", {name:$username.val()} ,function(data){
+					if(data.length === 0){
+						$("#login-fields").addClass("has-error");
+						$("#error-login").addClass("give-error");
+						$("#error-login").html("*Username does not exist");
+					} else if (data.password !== $password.val()){
+						$("#login-fields").addClass("has-error");
+						$("#error-login").addClass("give-error");
+						$("#error-login").html("*Password is incorrect");
+					} else {
+						person = $username.val();
+						myRoutes.navigate("chat/"+$username.val(),{trigger: true});
+					}
+			});
 		}
 	}
-
-
-
-
-
-
-
-
-
-
-
-
-
 });
