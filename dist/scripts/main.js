@@ -8,7 +8,9 @@ $(document).ready(function(){
 	var $signInBtn = $("#login-btn");
 	var $signUpBtn = $("#sign-up-btn");
 	var $message = $("#message");
+	var myUsernameArray = [];
 	var person;
+	var theUser;
 
 	var routeConfig = {
 		routes: {
@@ -80,21 +82,54 @@ $(document).ready(function(){
 		validateNewSignUp();
 	});
 
+	//setInterval(getMessages, 500);
+
+	function getMessages() {
+		
+		$.get(
+			"https://young-spire-1181.herokuapp.com/messages",
+			onMessagesReceived,
+			'json'
+		);
+	}
+
+	function onMessagesReceived(data) {
+		var myHtml = render(data);
+		var $messageList = $('#general-chat');
+		$messageList.html(myHtml);
+	}
+
+	function getUsernames(data){
+		for(var i = 0; i < data.length; i++){
+			myUsernameArray.push(data[i].name);
+		}
+		console.log(myUsernameArray);
+	}
+
+	function render(messages) {
+		var returnHtml = '';
+
+		for(var i=0; i<messages.length; i++) {
+			var currentMessage = messages[i];
+
+			returnHtml += '<div>' + currentMessage.user_id+ ': ' + currentMessage.body + '</div>';
+		}
+		return returnHtml;
+	}
+
 	$message.on("submit", function(event){
 		event.preventDefault();
 		var messageID = null;
 		var userID = null;
 		var theMessage = $("#message-area").val();
+		$("#message-area").val("");
 		$.get("https://young-spire-1181.herokuapp.com/users", {name:person}, function(data){
 			var dataID = data.id;
-			console.log(data);
+
 			$.ajax({
 					type: "POST",
 					url:"https://young-spire-1181.herokuapp.com/messages",
-					data:{user_id: dataID, body: theMessage},
-					success: function(messageObj){
-						console.log(messageObj);
-					}
+					data:{user_id: dataID, body: theMessage}
 				});
 			
 		},"json");
