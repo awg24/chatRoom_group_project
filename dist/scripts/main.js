@@ -84,8 +84,21 @@ $(document).ready(function(){
 
 	//setInterval(getMessages, 500);
 
+
+	$.get(
+		"https://young-spire-1181.herokuapp.com/users",
+		function(data){
+			for(var i = 0; i < data.length; i++){
+				myUsernameArray.push(data[i].name);
+			}
+		},
+		'json'
+	);
+
 	function getMessages() {
 		
+		var objDiv = $("#general-chat");
+			objDiv.scrollTo("max");
 		$.get(
 			"https://young-spire-1181.herokuapp.com/messages",
 			onMessagesReceived,
@@ -103,16 +116,17 @@ $(document).ready(function(){
 		for(var i = 0; i < data.length; i++){
 			myUsernameArray.push(data[i].name);
 		}
-		console.log(myUsernameArray);
+		myUsernameArray.reverse();
+		
 	}
 
 	function render(messages) {
 		var returnHtml = '';
-
+		console.log(myUsernameArray);
 		for(var i=0; i<messages.length; i++) {
 			var currentMessage = messages[i];
-
-			returnHtml += '<div>' + currentMessage.user_id+ ': ' + currentMessage.body + '</div>';
+			var index = currentMessage.user_id - 1;  	
+			returnHtml += '<div>' + myUsernameArray[index] + ': ' + currentMessage.body + '</div>';
 		}
 		return returnHtml;
 	}
@@ -129,7 +143,10 @@ $(document).ready(function(){
 			$.ajax({
 					type: "POST",
 					url:"https://young-spire-1181.herokuapp.com/messages",
-					data:{user_id: dataID, body: theMessage}
+					data:{user_id: dataID, body: theMessage},
+					success: function(){
+						
+					}
 				});
 			
 		},"json");
