@@ -39,3 +39,7 @@
 #general-chat {
 	overflow-y: scroll;
 }
+img {
+	height: 200px;
+	width: 200px;
+}
