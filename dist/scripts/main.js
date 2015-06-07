@@ -135,7 +135,7 @@ $(document).ready(function(){
 			});
 	});
 
-		setInterval( function() { getMessages(chatroomID) }, 500 );
+		//setInterval( function() { getMessages(chatroomID) }, 500 );
 
 	function getMessages(IDs) {
 		if(IDs){
@@ -171,6 +171,7 @@ $(document).ready(function(){
 		for(var i=0; i<messages.length; i++) {
 			var checkForHttps = messages[i].body.substring(0,8);
 			var checkforPic = messages[i].body.substring(messages[i].body.length-4, messages[i].body.length);
+			var checkforCom = messages[i].body.substring(messages[i].body.length-4, messages[i].body.length);
 			var checkForHttp = messages[i].body.substring(0,7);
 			var checkForWww = messages[i].body.substring(0,4);
 
@@ -184,7 +185,7 @@ $(document).ready(function(){
 				} else {
 					returnHtml += '<div class=comment>['+messages[i].timestamp+"] "+messages[i].name + ': ' + messages[i].body + '</div>';
 				}
-			} else if(checkForHttps === "https://" || checkForHttp === "http://" || checkForWww === "www."){
+			} else if(checkForHttps === "https://" || checkForHttp === "http://" || checkForWww === "www." && checkforCom === ".com"){
 				if(checkForWww === "www."){
 					returnHtml += "<div class=comment>["+messages[i].timestamp+"] "+messages[i].name + ": " +"<a href='http://"+messages[i].body+"'>"+messages[i].body +"</a></div>";
 				} else {
@@ -202,6 +203,7 @@ $(document).ready(function(){
 		var messageID = null;
 		var userID = null;
 		var theMessage = $("#message-area").val();
+		soundsCommands(theMessage);
 		$("#message-area").val("");
 		$.get("https://young-spire-1181.herokuapp.com/users", {name:person}, function(data){
 			var dataID = data.id;
@@ -310,4 +312,65 @@ $(document).ready(function(){
 			});
 		}
 	}
+
+	function soundsCommands(cmd){
+		switch(cmd){
+			case "@burp": 
+							var snd = new Audio("sounds/burp.wav");
+							snd.play();
+			break;
+			case "@ohhh": 
+							var snd = new Audio("sounds/ohhh.wav");
+							snd.play();
+			break;
+			case "@kiss": 
+							var snd = new Audio("sounds/kiss.wav");
+							snd.play();
+			break;
+			case "@whistle": 
+							var snd = new Audio("sounds/whistle.wav");
+							snd.play();
+			break;
+			case "@sneeze": 
+							var snd = new Audio("sounds/sneeze.wav");
+							snd.play();
+			break;
+			case "@laugh": 
+							var snd = new Audio("sounds/laugh.wav");
+							snd.play();
+			break;
+			default:
+			break;
+		}
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 });
