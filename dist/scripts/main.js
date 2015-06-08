@@ -14,6 +14,7 @@ $(document).ready(function(){
 	var $settings = $("#settings");
 	var $userSettings = $("#user-settings");
 	var $saveSetting = $("#save-settings");
+	var checkMessageLength = 0;
 	var myUsernameArray = [];
 	var person;
 	var theUser;
@@ -214,7 +215,7 @@ $(document).ready(function(){
 		} else {
 			profanity = "censor:on"
 		}
-		
+
 		$.post("https://agile-chamber-3594.herokuapp.com/users/"+dataID+"/settings/add",{settings: contentHistory},function(){
 			$.post("https://agile-chamber-3594.herokuapp.com/users/"+dataID+"/settings/add",{settings: recentUsers},function(){
 				$.post("https://agile-chamber-3594.herokuapp.com/users/"+dataID+"/settings/add",{settings: profanity},function(){
@@ -258,7 +259,11 @@ $(document).ready(function(){
 
 	function render(messages) {
 		var returnHtml = '';
-		
+		if(checkMessageLength < messages.length){
+			var snd = new Audio("sounds/beep9.mp3");
+			snd.play();
+		}
+
 		for(var i=0; i<messages.length; i++) {
 			var checkForHttps = messages[i].body.substring(0,8);
 			var checkforPic = messages[i].body.substring(messages[i].body.length-4, messages[i].body.length);
@@ -290,6 +295,7 @@ $(document).ready(function(){
 				}
 			}
 		}
+		checkMessageLength = messages.length
 		return returnHtml;
 	}
 
