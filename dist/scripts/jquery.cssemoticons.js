@@ -130,5 +130,5 @@
     });
   }
 
-  $.fn.emoticonize.defaults = {animate: true, delay: 500, exclude: 'pre,code,.no-emoticons'}
+  $.fn.emoticonize.defaults = {animate: false, delay: 0, exclude: 'pre,code,.no-emoticons'}
 })(jQuery);

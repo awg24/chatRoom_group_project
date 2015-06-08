@@ -7,7 +7,7 @@
 	<link rel="stylesheet" type="text/css" href="css/jquery.cssemoticons.css">
 </head>
 <body>
-	<div class="panel panel-primary text-center page" id="login">
+	<div class="panel panel-success text-center page" id="login">
  		<div class="panel-heading">
    			<h3 class="panel-title">Login</h3>
  		</div>
@@ -24,7 +24,7 @@
 		  			</div>
 	  			</div>
 	  			<div id="error-login"></div><br>
-	  			<button type="button" class="btn btn-primary" id="login-btn">Log In</button><br><br>
+	  			<button type="button" class="btn btn-success" id="login-btn">Log In</button><br><br>
 	  		<label class="control-label">----- OR -----</label><br><br>
 	  			<div class="control-group" id="blank">
 			  		<label class="control-label">Sign Up</label>
@@ -43,14 +43,13 @@
 				  	</div>
 			  		<label class="control-label" id="label-error"></label>
 	  			</div>
-	  			<button type="button" class="btn btn-primary" id="sign-up-btn">Submit</button>
+	  			<button type="button" class="btn btn-success" id="sign-up-btn">Submit</button>
 	  			<br><br>
   			</form>
   		</div>
 	</div>
-
 	<div class="page" id="pick-chat">
-		<div class="panel panel-primary">
+		<div class="panel panel-success">
 		  <div class="panel-heading">
 		    <h3 class="panel-title">Create/Join Chat</h3>
 		  </div>
@@ -58,20 +57,22 @@
 		 	<ol>
 		  	</ol>
 		  	<input type="input" id="new-chat-name"><br><br>
-		  	<button class="btn btn-primary" id="create-chat">Create New Chat</button>		
+		  	<button class="btn btn-success" id="create-chat">Create New Chat</button>		
 		  </div>
 		</div>
 	</div>
 	<div class="page" id="chatroom">
 		<div class="well container">
+			<button id="logout" class="btn btn-danger pull-right">Logout</button>
+			<button id="settings" class="btn btn-info pull-right">User Settings</button>
+			<button id="leave-chat" class="btn btn-warning">Leave Chat</button>
 			<ul class="nav nav-tabs" id="nav-tabs">
-				<li><a href="#user">User</a></li>
 				<li><a href="#leaderboard">Leaderboard</a></li>
 				<li><a href="#pick-chat">+ Create/Join New Chat</a></li>
 			</ul>
-			<div class="col-xsm-12 col-sm-9 extend-height" id="general-chat">what</div>
-			<div class="col-xsm-12 col-sm-9 extend-height" id="user-info">user info</div>
-			<div class="col-xsm-12 col-sm-9 extend-height" id="leaderboard">im in the lead</div>
+			<div class="col-xsm-12 col-sm-9 extend-height" id="general-chat"></div>
+			<div class="col-xsm-12 col-sm-9 extend-height" id="user-info"></div>
+			<div class="col-xsm-12 col-sm-9 extend-height" id="leaderboard"></div>
 			<div class="col-xsm-0 col-sm-2 col-sm-offset-1 extend-height change-color" id="user-list"></div>
 		</div>
 		<div class="well container extend-chat">
@@ -80,18 +81,72 @@
 					<input id="message-area">
 				</div>
 				<div class="col-sm-1">
-					<button type="submit" class="btn btn-primary btn-lg">Send</button>
+					<button type="submit" class="btn btn-success btn-lg">Send</button>
 				</div>
 			</form>
 		</div>
 	</div>
-	
+	<div class="page" id="user-settings">
+		<div class="panel panel-success">
+		  <div class="panel-heading">
+		    <h3 class="panel-title">User Settings</h3>
+		  </div>
+		  <div class="panel-body" id="panel-create">
+		  <label>Keep content history for...</label>
+		 	 <div id="content-settings">
+			 	 <div class="radio">
+				  <label><input type="radio" name="content-history" value="contents_timespan:a">No History</label>
+				</div>
+				<div class="radio">
+				  <label><input type="radio" name="content-history" checked="checked" value="contents_timespan:b">5 Minutes</label>
+				</div>
+				<div class="radio">
+				  <label><input type="radio" name="content-history" value="contents_timespan:c">15 Minutes</label>
+				</div>
+				<div class="radio">
+				  <label><input type="radio" name="content-history" value="contents_timespan:d">15 Minutes</label>
+				</div>
+				<div class="radio">
+				  <label><input type="radio" name="content-history" value="contents_timespan:e">60 Minutes</label>
+				</div>
+				<div class="radio">
+				  <label><input type="radio" name="content-history" value="contents_timespan:f">All History</label>
+				</div>
+			</div><br>
+			<label>Show recent users for...</label>
+			<div id="recent-user-settings">
+				<div class="radio">
+				  <label><input type="radio" name="recent-users" value="recent_users_timespan:1">No History</label>
+				</div>
+				<div class="radio">
+				  <label><input type="radio" name="recent-users" value="recent_users_timespan:2">15 Minutes</label>
+				</div>
+				<div class="radio">
+				  <label><input type="radio" name="recent-users" value="recent_users_timespan:3">30 Minutes</label>
+				</div>
+				<div class="radio">
+				  <label><input type="radio" name="recent-users" value="recent_users_timespan:4">1 Hour</label>
+				</div>
+				<div class="radio">
+				  <label><input type="radio" name="recent-users" value="recent_users_timespan:5">2 Hours</label>
+				</div>
+				<div class="radio">
+				  <label><input type="radio" name="recent-users" checked="checked" value="recent_users_timespan:6">4 Hours</label>
+				</div>
+			</div>
+			<label>Profanity Filter</label>
+			<div class="checkbox">
+			  <label><input type="checkbox" name="profanity" checked="checked">On</label>
+			</div><br>
+		  	<button class="btn btn-success" id="save-settings">Save Settings</button>		
+		  </div>
+		</div>
+	</div>
 	<script type="text/javascript" src="bower_components/underscore/underscore-min.js"></script>
 	<script type="text/javascript" src="bower_components/backbone/backbone-min.js"></script>
 	<script type="text/javascript" src="bower_components/jquery/dist/jquery.min.js"></script>
 	<script type="text/javascript" src="bower_components/jquery.scrollTo/jquery.scrollTo.min.js"></script>
 	<script type="text/javascript" src="scripts/jquery.cssemoticons.js"></script>
 	<script type="text/javascript" src="scripts/main.js"></script>
-	
 </body>
 </html>
