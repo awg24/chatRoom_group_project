@@ -44,6 +44,12 @@
 #general-chat {
 	overflow-y: scroll;
 }
+#leaderboard{
+	overflow-y: scroll;
+}
+#user-info{
+	overflow-y: scroll;
+}
 img {
 	height: 200px;
 	width: 200px;
